@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Library</title>
+  <title>Cinephile</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://kit.fontawesome.com/c8e4d183c2.js" crossorigin="anonymous"></script>
-  <script src="app.js"></script>
+  <script src="./app.js" defer></script>
 </head>
 
 <body>
@@ -20,8 +20,8 @@
         </figure>
         <ul class="nav__links">
           <li><a href="#" class="nav__link link__hover-effect">Home</a></li>
-          <li><a href="#" class="nav__link link__hover-effect">Find a movie</a></li>
-          <li><a href="#" class="nav__link nav__link--primary">Contact</a></li>
+          <li><a href="./movie.html" class="nav__link link__hover-effect">Find a movie</a></li>
+          <li><a href="#" class="nav__link nav__link--primary link__contact">Contact</a></li>
         </ul>
         <button class="btn__menu" onclick="openMenu()">
           <i class="fas fa-bars"></i>
@@ -35,10 +35,10 @@
               <a href="#" class="menu__link" onclick="closeMenu()">Home</a>
             </li>
             <li class="menu__list">
-              <a href="#features" class="menu__link" onclick="closeMenu()">Book</a>
+              <a href="./movie.html" class="menu__link" onclick="closeMenu()">Find a Movie</a>
             </li>
             <li class="menu__list">
-              <a class="menu__link no-cursor" onclick="alertNotImplemented()">Contact</a>
+              <a class="menu__link link__contact no-cursor">Contact</a>
             </li>
           </ul>
         </div>
@@ -52,7 +52,15 @@
         </div>
         <div class="header__browser--container">
             <input type="text" placeholder="Search by Name" class="header__browser">
-            <button class="btn bg--yellow">Browse Movies</button>
+
+            <button class="btn bg--yellow">Browse Movies
+            </button>
+            <div class="spinner__container">
+                <!-- <div class="books">
+                    <i class="fas fa-spinner books__loading--spinner"></i>
+                  </div> -->
+                    <i class="fas fa-spinner loading--spinner"></i>
+            </div>
 
         </div>
         <figure class="header__img--wrapper">
