@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinephile</title>
+    <script src="./movie.js" defer></script>
+    <link rel="stylesheet" href="./styles.css" />
+    <script
+      src="https://kit.fontawesome.com/c8e4d183c2.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>history.scrollRestoration = "manual"</script>
+  </head>
+  <body>
+    <section id="landing__movie">
+      <nav>
+        <div class="nav__container">
+          <figure class="logo--wrapper">
+            <img class="logo" src="assets/cinephile-white.png" alt="" />
+          </figure>
+          <ul class="nav__links">
+            <li>
+              <a href="./index.html" class="nav__link link__hover-effect white"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a href="./movie.html" class="nav__link link__hover-effect white"
+                >Find a movie</a
+              >
+            </li>
+            <li>
+              <a href="#" class="nav__link nav__link--primary white">Contact</a>
+            </li>
+          </ul>
+          <button class="btn__menu" onclick="openMenu()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="menu__backdrop">
+            <button class="btn__menu btn__menu--close" onclick="closeMenu()">
+              <i class="fas fa-times"></i>
+            </button>
+            <ul class="menu__links">
+              <li class="menu__list">
+                <a href="./index.html" class="menu__link" onclick="closeMenu()">Home</a>
+              </li>
+              <li class="menu__list">
+                <a href="#" class="menu__link" onclick="closeMenu()"
+                  >Find a Movie</a
+                >
+              </li>
+              <li class="menu__list">
+                <a class="menu__link no-cursor" onclick="alertNotImplemented()"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+        </div>
+      </nav>
+      <header class="header header__movie">
+        <div class="row">
+            <div class="header__container">
+                <div class="header__browser--container">
+                    <input type="text" placeholder="Search by Name" class="header__browser">
+        
+                    <button class="btn bg--yellow" onclick="searchMovie()">Browse Movies
+                    </button>
+                    <div class="spinner__container">
+                        <!-- <div class="books">
+                            <i class="fas fa-spinner books__loading--spinner"></i>
+                          </div> -->
+                            <i class="fas fa-spinner loading--spinner"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </header>
+    </section>
+    <div class="spinner__container">
+      <i class="fas fa-spinner loading--spinner"></i>
+    </div>
+    <section id="movies">
+      <div class="container">
+        <div class="row">
+            <div class="movies__search">
+                <h2 class="movies__search--title">Search for movies in the search bar</h2>
+                <select name="Pimba" id="filter" onchange="filterMovies(event)">
+                  <option value="filter" selected disabled>Filter</option>
+                  <option value="OLDEST">Oldest to Latest</option>
+                  <option value="NEWEST">Latest to Oldest</option>
+                </select>
+            </div>
+          <div class="movies--container">
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <!-- <div class="container">
+        <div class="row footer__row"></div>
+      </div> -->
+    </footer>
+  </body>
+</html>
