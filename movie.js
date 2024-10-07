@@ -26,7 +26,7 @@ console.log(movieData[1]);
 
 
 localStorage.removeItem("movieData");
-const requestURL = `http://www.omdbapi.com/?apikey=${apiKey}&`;
+const requestURL = `https://www.omdbapi.com/?apikey=${apiKey}&`;
 let input = "";
 // let existsSearchedMovie = omdbResponse ? true : false;
 

@@ -8,7 +8,7 @@ const menuBackdrop = document.querySelector('.menu__backdrop');
 // let sentFromHome = {firstTime: false, movieData: ""};
 
 const apiKey = "fdbbfd20";
-let requestURL = `http://www.omdbapi.com/?apikey=${apiKey}&`;
+let requestURL = `https://www.omdbapi.com/?apikey=${apiKey}&`;
 
 async function handleClickListeners() {
   btnSearch.addEventListener("click", async function () {
