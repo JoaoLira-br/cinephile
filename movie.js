@@ -1,27 +1,37 @@
-
 for (let i = 0; i < localStorage.length; i++) {
-    const element = localStorage.key(i);
-    console.log(element);
-  }
-console.log(localStorage.getItem("movieData"));
+  const element = localStorage.key(i);
+  console.log(element);
+}
+console.log(typeof localStorage.getItem("movieData"));
 
-
-
-const FILTERS = { OLDEST: "OLDEST", NEWEST: "NEWEST"};
+const FILTERS = { OLDEST: "OLDEST", NEWEST: "NEWEST" };
 const menuBackdrop = document.querySelector(".menu__backdrop");
 const apiKey = "fdbbfd20";
 let userHasSearched = localStorage.getItem("movieData") ? true : false;
-let omdbResponse = userHasSearched ? localStorage.getItem("movieData") : "";
+let existsSearchedMovie = false;
+let movieData = [];
+let moreInfoJSON = {};
+let movieJSON = {};
+
+if(userHasSearched){
+    movieJSON = JSON.parse(localStorage.getItem("movieData"));
+    existsSearchedMovie = movieJSON.hasOwnProperty("Search") ? true : false;
+    if(existsSearchedMovie){
+        movieData = movieJSON.Search;
+    }
+}
+
+console.log(typeof movieData);
+console.log(movieData[1]);
+
+
 localStorage.removeItem("movieData");
 const requestURL = `http://www.omdbapi.com/?apikey=${apiKey}&`;
-const unsplashAPI =
-  "https://api.unsplash.com/photos/random?query=lego+movie&client_id=6bHnrOETlHPBvUqDVJbYfOvULGCixhU-_HCTbVU3-ng";
-let existsSearchedMovie = omdbResponse ? true : false;
 let input = "";
+// let existsSearchedMovie = omdbResponse ? true : false;
 
 async function searchMovie() {
   userHasSearched = true;
-  console.log("pimba");
   const searchInput = document.querySelector(".header__browser");
   input = searchInput.value;
   if (!input) {
@@ -32,35 +42,58 @@ async function searchMovie() {
   spinnerContainer.classList.add("loading");
   let fetchURL = requestURL + `s=${input}`;
   const response = await fetch(fetchURL);
-  omdbResponse = await response.json();
-  console.log(omdbResponse);
-
-  existsSearchedMovie = omdbResponse.hasOwnProperty("Search") ? true : false;
+  movieJSON = await response.json();
+  existsSearchedMovie = movieJSON.hasOwnProperty("Search") ? true : false;
   spinnerContainer.classList.remove("loading");
-
-  omdbResponse = JSON.stringify(omdbResponse);
+  movieData = movieJSON.Search;
+  console.log(movieData);
   renderMovie();
 }
 
-function renderMovie(filter = "") {
+
+async function renderMovie(filter = "") {
   const movieWrapper = document.querySelector(".movies--container");
   const moviesSection = document.querySelector(".movies");
+  const movieSearchTitle = document.querySelector(".movies__search--title");
   if (!userHasSearched) {
     return;
   }
   if (!existsSearchedMovie) {
+    movieSearchTitle.innerHTML = `Could not find any movie with title <span class='yellow'> "${input}"</span>`;
     let notFoundHTML = getNotFoundHTML();
     movieWrapper.innerHTML = notFoundHTML;
     return;
   }
-  let movies = omdbResponse ? JSON.parse(omdbResponse).Search : "";
+  let movies = movieData ? movieData : "";
+     console.log(movies);
+     console.log(typeof movies);
+
+//   let movies = JSON.parse(omdbResponse).Search;
+
+
+
   movies = movies.length > 6 ? movies.slice(0, 6) : movies;
-    if (filter === FILTERS.OLDEST){
-        movies.sort((a, b) => a.Year - b.Year);
-    }
-    if (filter === FILTERS.NEWEST){
-        movies.sort((a, b) => b.Year - a.Year);
-    }
+  if (filter === FILTERS.OLDEST) {
+    movies.sort((a, b) => a.Year - b.Year);
+  }
+  if (filter === FILTERS.NEWEST) {
+    movies.sort((a, b) => b.Year - a.Year);
+  }
+
+ for (let movie of movies) {
+    let resJSON = await fetch(requestURL + `i=${movie.imdbID}`);
+    resJSON = await resJSON.json();
+    console.log(resJSON);
+    
+    let obj = {...movie, ...resJSON};
+    console.log(obj);
+    
+    movie = {...movie, ...resJSON};
+}
+  
+  console.log(movies);
+  
+  
   const movieHTML = movies
     .map((movie) => {
       return getMovieHTML(movie);
@@ -69,13 +102,12 @@ function renderMovie(filter = "") {
   movieWrapper.innerHTML = movieHTML;
 }
 
-function filterMovies(event){
-    const filter = event.target.value;
-    renderMovie(filter);
+function filterMovies(event) {
+  const filter = event.target.value;
+  renderMovie(filter);
 }
 
 function getMovieHTML(movie) {
-  let moviePoster = movie.Poster === "N/A" ? getRandomImage() : movie.Poster;
   return `
     <div class="movie">
     <figure class="img__movie--wrapper">
@@ -94,26 +126,24 @@ function getMovieHTML(movie) {
 
 function getNotFoundHTML() {
   return `<div class="movies--not-found">
-    <h2 class="movies__not-found--title">Could not find any movie with title "${input}" </h2>
     <figure class="movies__not-found--wrapper">
         <img
             src="./assets/undraw_void_-3-ggu.svg"
             alt="not found"
             class="movies__not-found--img"
-        />
+            />
     </figure>
   </div>`;
 }
-async function getRandomImage() {
-  const response = await fetch(unsplashAPI);
-  const data = await response.json();
-  console.log(data);
+// async function getRandomImage() {
+//   const response = await fetch(unsplashAPI);
+//   const data = await response.json();
+//   console.log(data);
 
-  return data.urls.regular;
-}
+//   return data.urls.regular;
+// }
 function openMenu() {
   menuBackdrop.classList.add("menu--open");
-  // document.body.classList.add('menu--open');
 }
 
 function closeMenu() {

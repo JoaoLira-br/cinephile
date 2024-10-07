@@ -479,6 +479,7 @@ MOVIES
 }
 .movie{
     width: 300px;
+    min-height: 300px;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 2px 1px #fabc3f;
@@ -491,11 +492,11 @@ MOVIES
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 80vh;
     max-width: 500px;
 }
 .movies__not-found--img{
-
+    width: 100%;
 }
 .movies__search{
     display: flex;
@@ -506,6 +507,8 @@ MOVIES
 .movies__search--title{
     /* font-size: 1.5rem; */
 }
+
+
 
 /* SMALL PHONES, LARGE SMARTPHONES */
 @media (max-width: 550px) {

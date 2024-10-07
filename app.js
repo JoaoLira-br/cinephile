@@ -23,6 +23,7 @@ async function handleClickListeners() {
     requestURL += `s=${searchInput.value}`;
     const response = await fetch(requestURL);
     const data = await response.json();
+    
     localStorage.setItem("movieData", JSON.stringify(data));
     // sentFromHome.firstTime = true;
 
